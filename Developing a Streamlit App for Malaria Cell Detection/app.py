@@ -15,28 +15,18 @@ import cv2
 import matplotlib.pyplot as plt
 
 def generate_heat_map(img_array, model, last_conv_layer_name):
-    # Create a model that maps the input image to the desired conv layer output and model output
-    grad_model = tf.keras.models.Model(
-        [model.inputs], [model.get_layer(last_conv_layer_name).output, model.output]
-    )
+    # Create a model that maps the input image to the desired conv layer output
+    conv_model = tf.keras.models.Model(model.inputs, model.get_layer(last_conv_layer_name).output)
     
-    # Get the gradient tape
-    with tf.GradientTape() as tape:
-        # Convert the input array to a tensor
-        img_tensor = tf.convert_to_tensor(img_array)
-        # Watch the input tensor
-        tape.watch(img_tensor)
-        # Get the conv layer output and model output
-        conv_outputs, predictions = grad_model(img_tensor)
-        # Get the top predicted class index
-        top_class_index = tf.argmax(predictions[0])
-        # Get the gradient of the top predicted class with respect to the conv layer output
-        grads = tape.gradient(predictions[:, top_class_index], conv_outputs)
-        # Get the mean gradient values across the spatial dimensions
-        pooled_grads = tf.reduce_mean(grads, axis=(0, 1, 2))
+    # Convert the input array to a tensor
+    img_tensor = tf.convert_to_tensor(img_array)
     
-    # Multiply each channel in the conv layer output by the corresponding mean gradient value
-    heatmap = tf.reduce_mean(tf.multiply(conv_outputs, pooled_grads), axis=-1)
+    # Get the conv layer output
+    conv_outputs = conv_model(img_tensor)
+    
+    # Multiply each channel in the conv layer output by the maximum value
+    heatmap = tf.reduce_mean(conv_outputs, axis=-1)
+    
     # Normalize the heatmap
     heatmap = np.maximum(heatmap, 0) / np.max(heatmap)
     
@@ -124,6 +114,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
