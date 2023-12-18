@@ -98,14 +98,14 @@ def main():
                 st.write("Probability: {:.2%}".format(prediction[0][0]))
 
             # Generate heat map
-            last_conv_layer_name = 'conv2d'
+            #last_conv_layer_name = 'conv2d'
             #heatmap = generate_heat_map(img_array, model, last_conv_layer_name)
 
             # Overlay heatmap on the original image
             #overlaid_img = overlay_heatmap(img_array[0], heatmap)
 
             # Display the overlaid image
-            st.image(img_array, use_column_width=True)
+            #st.image(img_array, use_column_width=True)
 
     if choice == 'About':
         st.subheader("Malaria Detection Web App made with Streamlit by Bharadwaj")
