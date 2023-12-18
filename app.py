@@ -99,13 +99,13 @@ def main():
 
             # Generate heat map
             last_conv_layer_name = 'conv2d'
-            heatmap = generate_heat_map(img_array, model, last_conv_layer_name)
+            #heatmap = generate_heat_map(img_array, model, last_conv_layer_name)
 
             # Overlay heatmap on the original image
-            overlaid_img = overlay_heatmap(img_array[0], heatmap)
+            #overlaid_img = overlay_heatmap(img_array[0], heatmap)
 
             # Display the overlaid image
-            st.image(overlaid_img, caption='Heatmap Overlay', use_column_width=True)
+            st.image(img_array, use_column_width=True)
 
     if choice == 'About':
         st.subheader("Malaria Detection Web App made with Streamlit by Bharadwaj")
