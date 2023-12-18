@@ -92,10 +92,10 @@ def main():
 
             if prediction[0][0] > 0.5:
                 st.write("Prediction: Uninfected")
-                st.write("Probability: {:.2%}".format(prediction[0][0]))
+                #st.write("Probability: {:.2%}".format(prediction[0][0]))
             else:
                 st.write("Prediction: Infected/Parasitized")
-                st.write("Probability: {:.2%}".format(prediction[0][0]))
+                #st.write("Probability: {:.2%}".format(prediction[0][0]))
 
             # Generate heat map
             #last_conv_layer_name = 'conv2d'
